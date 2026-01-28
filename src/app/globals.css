@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Brand Identity - Classic Royal Blue & Gold */
-  --primary: #1e40af;
-  /* Richer Royal Blue */
-  --primary-dark: #1e3a8a;
-  --primary-light: #eff6ff;
+  /* Brand Identity - Brighter Green & Cream */
+  --primary: #2A8575;
+  /* Brighter Teal/Green */
+  --primary-dark: #21695C;
+  --primary-light: #E6F2F0;
 
-  --accent: #d4af37;
-  /* Metallic Gold */
-  --accent-light: #fffdf5;
+  --accent: #F59E0B;
+  /* Warm Amber/Gold */
+  --accent-light: #FEF3C7;
 
   --secondary: #334155;
 
@@ -19,36 +19,36 @@
   --warning: #f59e0b;
 
   /* Surfaces & Backgrounds */
-  --bg-body: #172554;
-  /* Deep Royal Blue Background */
-  --bg-card: rgba(255, 250, 225, 0.95);
-  /* Golden Cream Cards to match sidebar */
-  --bg-sidebar: rgba(255, 250, 225, 0.95);
-  /* Opaque Golden Cream for Sidebar */
+  --bg-body: #2A8575;
+  /* Brighter Teal/Green Background */
+  --bg-card: #F9F7F0;
+  /* Warmer/Lighter Cream */
+  --bg-sidebar: #F9F7F0;
+  /* Warmer/Lighter Cream */
 
-  /* Glassmorphism Variables */
-  --glass-bg: rgba(255, 250, 225, 0.9);
-  --glass-border: rgba(212, 175, 55, 0.3);
-  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  /* Glassmorphism Variables used in other areas - adapted */
+  --glass-bg: rgba(249, 247, 240, 0.95);
+  --glass-border: rgba(42, 133, 117, 0.15);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
 
   /* Typography */
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
 
   /* Text Colors */
-  --text-main: #f8fafc;
-  /* White text for main body (headings) */
-  --text-card: #0f172a;
-  /* Dark text for inside cards */
-  --text-muted: #94a3b8;
+  --text-main: #FFFFFF;
+  /* White text for main body background */
+  --text-card: #28302D;
+  /* Dark Green/Grey for inside cards */
+  --text-muted: #E2E8F0;
   /* Light gray for dark bg */
   --text-muted-card: #64748b;
   /* Slate for light card bg */
-  --text-inverted: #ffffff;
+  --text-inverted: #FFFFFF;
 
   /* Borders & Radius */
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-color-card: #e2e8f0;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --border-color-card: #E6E4DC;
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
@@ -56,8 +56,8 @@
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 }
 
 * {
@@ -72,10 +72,8 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  background-image:
-    radial-gradient(at 0% 0%, rgba(30, 64, 175, 0.4) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(212, 175, 55, 0.1) 0px, transparent 50%);
-  background-attachment: fixed;
+  /* Removed strong gradients for a cleaner flat look, added subtle noise or sheen if needed, but flat is safer for this theme */
+  background-image: none;
 }
 
 h1,
@@ -155,13 +153,13 @@ button {
 .btn-primary {
   background: var(--primary);
   color: var(--text-inverted);
-  box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.3);
+  box-shadow: 0 4px 6px -1px rgba(42, 133, 117, 0.3);
 }
 
 .btn-primary:hover {
   background: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 8px -1px rgba(30, 64, 175, 0.4);
+  box-shadow: 0 6px 8px -1px rgba(42, 133, 117, 0.4);
 }
 
 .btn-outline {
@@ -290,10 +288,10 @@ button {
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background: var(--primary-light);
   color: var(--primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(30, 64, 175, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .logo {
@@ -313,7 +311,8 @@ button {
   border: 2px solid var(--primary);
   padding: 2px;
   background: white;
-  width: 48px; /* Slightly larger */
+  width: 48px;
+  /* Slightly larger */
   height: 48px;
   object-fit: cover;
 }

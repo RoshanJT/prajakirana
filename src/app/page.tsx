@@ -17,8 +17,14 @@ export default function Dashboard() {
           <p className="text-muted">Welcome back, Administrator</p>
         </div>
         <button
-          className="btn btn-primary"
-          style={{ padding: '0.75rem 1.5rem', borderRadius: '50px' }}
+          className="btn"
+          style={{
+            padding: '0.75rem 1.5rem',
+            borderRadius: '50px',
+            backgroundColor: '#1F2937',
+            color: '#FFFFFF',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
+          }}
           onClick={() => setShowDonationForm(true)}
         >
           + New Donation
