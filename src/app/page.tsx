@@ -2,32 +2,28 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import DashboardStats from "@/components/DashboardStats";
 import DonationChart from "@/components/DonationChart";
 import DonationForm from "@/components/DonationForm";
+import EventCalendar from "@/components/EventCalendar";
+import RecentActivity from "@/components/RecentActivity";
 
 export default function Dashboard() {
   const [showDonationForm, setShowDonationForm] = useState(false);
 
   return (
     <div>
-      <header className="flex justify-between items-end" style={{ marginBottom: '3rem' }}>
+      <header className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
         <div>
           <h1 className="text-2xl font-bold" style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Dashboard Overview</h1>
           <p className="text-muted">Welcome back, Administrator</p>
         </div>
         <button
-          className="btn"
-          style={{
-            padding: '0.75rem 1.5rem',
-            borderRadius: '50px',
-            backgroundColor: '#1F2937',
-            color: '#FFFFFF',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
-          }}
+          className="btn btn-primary"
           onClick={() => setShowDonationForm(true)}
         >
-          + New Donation
+          <Plus size={18} /> New Donation
         </button>
       </header>
 
@@ -45,22 +41,13 @@ export default function Dashboard() {
       <DashboardStats />
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
-        <DonationChart />
+        <div className="flex flex-col gap-8">
+          <DonationChart />
+          <RecentActivity />
+        </div>
 
-        {/* Recent Activity / Quick Actions Placeholder */}
-        <div className="card" style={{ height: 'fit-content' }}>
-          <h3 className="text-lg font-bold" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>Quick Actions</h3>
-          <div className="flex flex-col gap-4">
-            <Link href="/donors" className="btn btn-outline w-full justify-between" style={{ padding: '1rem', justifyContent: 'space-between' }}>
-              Add Donor <span style={{ color: 'var(--primary)' }}>→</span>
-            </Link>
-            <Link href="/campaigns" className="btn btn-outline w-full justify-between" style={{ padding: '1rem', justifyContent: 'space-between' }}>
-              Create Campaign <span style={{ color: 'var(--primary)' }}>→</span>
-            </Link>
-            <Link href="/communication" className="btn btn-outline w-full justify-between" style={{ padding: '1rem', justifyContent: 'space-between' }}>
-              Send Broadcast <span style={{ color: 'var(--primary)' }}>→</span>
-            </Link>
-          </div>
+        <div className="flex flex-col gap-6">
+          <EventCalendar />
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/client'
 import { User, Session } from '@supabase/supabase-js'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 
 type AuthContextType = {
     user: User | null
@@ -47,8 +48,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 function AuthGuard({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth()
-    const router = require('next/navigation').useRouter()
-    const pathname = require('next/navigation').usePathname()
+    const router = useRouter()
+    const pathname = usePathname()
 
     useEffect(() => {
         if (!loading) {

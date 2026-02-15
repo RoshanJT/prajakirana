@@ -19,17 +19,17 @@
   --warning: #f59e0b;
 
   /* Surfaces & Backgrounds */
-  --bg-body: #2A8575;
-  /* Brighter Teal/Green Background */
+  --bg-body: #1F4D45;
+  /* Deep Rich Green */
   --bg-card: #F9F7F0;
-  /* Warmer/Lighter Cream */
+  /* Cream */
   --bg-sidebar: #F9F7F0;
-  /* Warmer/Lighter Cream */
+  /* Cream */
 
-  /* Glassmorphism Variables used in other areas - adapted */
+  /* Glassmorphism Variables */
   --glass-bg: rgba(249, 247, 240, 0.95);
-  --glass-border: rgba(42, 133, 117, 0.15);
-  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  --glass-border: rgba(31, 77, 69, 0.15);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
   /* Typography */
   --font-heading: 'Outfit', sans-serif;
@@ -37,9 +37,9 @@
 
   /* Text Colors */
   --text-main: #FFFFFF;
-  /* White text for main body background */
-  --text-card: #28302D;
-  /* Dark Green/Grey for inside cards */
+  /* White text for main body */
+  --text-card: #1F2937;
+  /* Dark text for inside cards */
   --text-muted: #E2E8F0;
   /* Light gray for dark bg */
   --text-muted-card: #64748b;
