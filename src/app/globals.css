@@ -98,6 +98,41 @@ button {
   background: none;
 }
 
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(31, 77, 69, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  /* Creates padding effect */
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) rgba(31, 77, 69, 0.05);
+}
+
 /* Utility Classes */
 .container {
   max-width: 1200px;
@@ -339,4 +374,554 @@ input:focus,
 textarea:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Dashboard Main Grid - Desktop Layout */
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   Only affects screens below 768px
+   Desktop layout remains unchanged
+   ============================================ */
+
+@media (max-width: 768px) {
+
+  /* Mobile Menu Button */
+  .mobile-menu-btn {
+    display: flex !important;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Sidebar Mobile Styles */
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 999;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.mobile-open {
+    left: 0;
+  }
+
+  /* Mobile Close Button - Show on mobile */
+  .mobile-close-btn {
+    display: flex !important;
+  }
+
+  /* Mobile Overlay */
+  .mobile-overlay {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Main Content Mobile */
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1.5rem 1rem !important;
+    padding-top: 4rem !important;
+    /* Space for hamburger button */
+  }
+
+  /* Container Mobile */
+  .container {
+    padding: 0 1rem;
+  }
+
+  /* Cards Mobile */
+  .card {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  /* Grid Stats Mobile - Stack to Single Column */
+  .grid-stats {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Typography Mobile */
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .text-xl {
+    font-size: 1.125rem;
+  }
+
+  .text-lg {
+    font-size: 1rem;
+  }
+
+  /* Buttons Mobile - Ensure Touch Targets */
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Logo Mobile */
+  .logo {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Nav Items Mobile */
+  .nav-item {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.95rem;
+  }
+
+  /* Dashboard Main Grid - Mobile Override */
+  .dashboard-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Modal Mobile - Popup with Scrolling (Not Full Screen) */
+  .modal-overlay {
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1rem !important;
+  }
+
+  .modal-content {
+    width: 95% !important;
+    max-width: 95% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    border-radius: var(--radius-lg) !important;
+    margin: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Ensure content inside modal scrolls properly */
+  .modal-scroll-area {
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  /* Form Inputs Mobile */
+  .input,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    font-size: 16px;
+    /* Prevents zoom on iOS */
+    min-height: 44px;
+  }
+
+  /* Table Mobile - Horizontal Scroll */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Flex Layouts Mobile */
+  .flex-mobile-col {
+    flex-direction: column !important;
+  }
+
+  /* Charts in Modal Mobile */
+  @media (max-width: 768px) {
+    .charts-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  /* Reduce Gaps Mobile */
+  .gap-8 {
+    gap: 1.5rem;
+  }
+
+  .gap-6 {
+    gap: 1rem;
+  }
+
+  .gap-4 {
+    gap: 0.75rem;
+  }
+
+  /* ============================================
+     OVERFLOW FIXES - Prevent Horizontal Scroll
+     ============================================ */
+
+  /* Ensure body and html don't overflow */
+  body,
+  html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Main content container */
+  .main-content {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
+  /* All containers should not exceed viewport */
+  * {
+    max-width: 100%;
+  }
+
+  /* Dashboard & Campaign Header - Grid Layout for Inline Button */
+  .dashboard-header,
+  .campaign-header {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "title action"
+      "subtitle subtitle";
+    gap: 0.5rem !important;
+    align-items: center !important;
+  }
+
+  .header-content {
+    display: contents;
+    /* Unwrap the div so h1 and p become grid items */
+  }
+
+  .dashboard-header h1,
+  .campaign-header h1 {
+    grid-area: title;
+    font-size: 1.25rem !important;
+    /* Smaller font for mobile title */
+    margin-bottom: 0 !important;
+    white-space: nowrap;
+  }
+
+  .dashboard-header p,
+  .campaign-header p {
+    grid-area: subtitle;
+    margin-top: 0.25rem;
+  }
+
+  .header-action {
+    grid-area: action;
+    width: auto !important;
+    /* Override full width */
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    height: 36px !important;
+  }
+
+  .header-action span {
+    display: none;
+    /* Hide text on very small screens */
+  }
+
+  /* Custom button text replacements */
+  .dashboard-header .header-action::after {
+    content: "New";
+    margin-left: 4px;
+    display: inline;
+  }
+
+  .campaign-header .header-action::after {
+    content: "Create";
+    margin-left: 4px;
+    display: inline;
+  }
+
+  /* Page Header General (Exclude dashboard/campaign from the flex-col rule) */
+  .page-header,
+  /* .dashboard-header, .campaign-header - REMOVED */
+  .donors-header,
+  .communication-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  /* Header buttons - Full width on mobile */
+  .page-header button,
+  .dashboard-header button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Actions container - Inline buttons for Donors page */
+  .header-actions {
+    width: 100% !important;
+    display: flex !important;
+    gap: 0.5rem !important;
+  }
+
+  .header-actions button {
+    flex: 1 !important;
+    width: auto !important;
+    justify-content: center !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    font-size: 0.8rem !important;
+    /* Slightly smaller text to fit "Export as CSV" */
+  }
+
+  /* Tables - Horizontal scroll container */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  /* Table wrapper for better scroll */
+  .table-container,
+  .donors-table,
+  .campaigns-table {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100% !important;
+  }
+
+  /* Search and filter bars - Adaptive Layout (Inline if fits, wrap if needed) */
+  .search-bar,
+  .filter-bar,
+  .donors-filters {
+    flex-direction: row !important;
+    /* Allow inline */
+    flex-wrap: wrap !important;
+  }
+
+  /* Override fixed widths to allow sharing row */
+  .search-bar input,
+  .filter-bar select,
+  .donors-filters input,
+  .donors-filters select {
+    width: auto !important;
+    flex: 1 1 120px !important;
+    /* Grow to fill, but min-width ~120px */
+    min-width: 0 !important;
+  }
+
+  /* Filter bar wrapper specific - Ensure it doesn't break layout */
+  .filter-bar {
+    flex: 1 1 auto;
+    width: 100% !important;
+    /* Take full width of parent flex item if wrapped */
+  }
+
+  /* Specific tweak for the search input wrapper div */
+  .search-bar>div:first-child {
+    flex: 1 1 150px;
+    /* Give search slightly more priority */
+    width: auto !important;
+  }
+
+  /* Communication page specific */
+  .communication-header {
+    flex-wrap: wrap !important;
+  }
+
+  .channel-buttons {
+    width: 100% !important;
+    display: flex !important;
+    gap: 0.5rem !important;
+  }
+
+  .channel-buttons button {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  /* Template gallery - Ensure proper scroll */
+  .template-gallery {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Recipient list */
+  .recipient-list,
+  .donor-list {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Email addresses - Truncate if too long */
+  .donor-email,
+  .recipient-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
+
+  /* Stat cards - Ensure they don't overflow */
+  .stat-card,
+  .card {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Flex containers - Allow wrapping */
+  .flex {
+    flex-wrap: wrap;
+  }
+
+  /* Grid layouts - Force single column */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Buttons in headers - Smaller text if needed */
+  .btn {
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  /* Prevent images from overflowing */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Charts and graphs */
+  canvas,
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* Tablet Breakpoint (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-content {
+    padding: 2rem 2rem;
+  }
+
+  .grid-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Hide mobile-only elements on desktop */
+@media (min-width: 769px) {
+  .mobile-menu-btn {
+    display: none !important;
+  }
+
+  .mobile-overlay {
+    display: none !important;
+  }
+
+  .mobile-close-btn {
+    display: none !important;
+  }
+}
+
+/* FORCE OVERFLOW FIX FOR MODALS MOBILE */
+@media (max-width: 768px) {
+
+  .modal-content,
+  .card.modal-content {
+    overflow-y: auto !important;
+    max-height: 90vh !important;
+    display: block !important;
+  }
+}
+
+/* Charts Grid - Responsive */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+
+  /* Fix for Recharts 0 dimensions in modal */
+  .chart-container {
+    width: 99% !important;
+    /* Slight reduction forces recalc */
+    height: 300px !important;
+    min-height: 300px !important;
+    display: block !important;
+  }
+}
+
+/* ============================================
+   LOGIN PAGE STYLES
+   ============================================ */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-body);
+  padding: 1rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+}
+
+.login-logo-container {
+  padding: 0.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.login-title {
+  color: var(--primary);
+  text-align: center;
+  line-height: 1.3;
+  font-size: 1.5rem;
+  /* text-2xl roughly */
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 1.25rem;
+    /* text-xl */
+  }
 }

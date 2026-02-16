@@ -51,7 +51,7 @@ export default function CampaignDetailsModal({ campaign, onClose }: CampaignDeta
         : 0;
 
     return (
-        <div style={{
+        <div className="modal-overlay" style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -63,7 +63,7 @@ export default function CampaignDetailsModal({ campaign, onClose }: CampaignDeta
             justifyContent: 'center',
             zIndex: 60
         }} onClick={onClose}>
-            <div className="card" style={{
+            <div className="card modal-content" style={{
                 width: '90%',
                 maxWidth: '600px',
                 maxHeight: '85vh',

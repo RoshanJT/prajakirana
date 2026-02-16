@@ -99,7 +99,7 @@ export default function DonorDetailModal({ donorId, onClose }: DonorDetailModalP
     };
 
     return (
-        <div style={{
+        <div className="modal-overlay" style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -111,7 +111,7 @@ export default function DonorDetailModal({ donorId, onClose }: DonorDetailModalP
             justifyContent: 'center',
             zIndex: 100
         }} onClick={onClose}>
-            <div className="card" style={{
+            <div className="card modal-content" style={{
                 width: '90%',
                 maxWidth: '800px',
                 maxHeight: '90vh',

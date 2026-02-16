@@ -40,6 +40,8 @@ interface CampaignRecord {
 export default function StatDetailModal({ type, onClose }: StatDetailModalProps) {
     const supabase = createClient();
     const [loading, setLoading] = useState(true);
+    const [chartsVisible, setChartsVisible] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Metrics State
     const [metrics, setMetrics] = useState({
@@ -235,9 +237,19 @@ export default function StatDetailModal({ type, onClose }: StatDetailModalProps)
                 }
             }
             setLoading(false);
+            // Small delay to allow modal layout to stabilize before rendering charts
+            setTimeout(() => setChartsVisible(true), 300);
         };
 
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         fetchData();
+        return () => window.removeEventListener('resize', checkMobile);
     }, [type, supabase]);
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
@@ -257,7 +269,7 @@ export default function StatDetailModal({ type, onClose }: StatDetailModalProps)
     };
 
     return (
-        <div style={{
+        <div className="modal-overlay" style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -269,12 +281,14 @@ export default function StatDetailModal({ type, onClose }: StatDetailModalProps)
             justifyContent: 'center',
             zIndex: 100
         }} onClick={onClose}>
-            <div className="card" style={{
+            <div className="card modal-content" style={{
                 width: '90%',
                 maxWidth: '800px',
                 maxHeight: '90vh',
                 overflowY: 'auto',
-                position: 'relative'
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column'
             }} onClick={e => e.stopPropagation()}>
 
                 <button
@@ -325,29 +339,95 @@ export default function StatDetailModal({ type, onClose }: StatDetailModalProps)
                         </div>
 
                         {/* Bottom Row: Charts */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                            {/* Chart 1 */}
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                                    {type === 'campaigns' ? <Target size={18} /> : <PieChart size={18} />}
-                                    {chartTitles.title1}
-                                </h3>
-                                <div style={{ width: '100%', height: 250 }}>
-                                    <ResponsiveContainer>
-                                        {type === 'campaigns' ? (
-                                            <BarChart data={chart1Data} layout="vertical" margin={{ left: 10 }}>
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis type="number" hide />
-                                                <YAxis dataKey="name" type="category" width={80} style={{ fontSize: '12px' }} />
-                                                <Tooltip formatter={(value: number) => `₹${value.toLocaleString()}`} />
-                                                <Legend />
-                                                <Bar dataKey="value" name="Raised" fill="#00C49F" radius={[0, 4, 4, 0]} barSize={20} />
-                                                <Bar dataKey="goal" name="Goal" fill="#d1d5db" radius={[0, 4, 4, 0]} barSize={20} />
-                                            </BarChart>
+                        {/* Bottom Row: Charts - Stack on mobile using flex-wrap or grid response */}
+                        {chartsVisible && (
+                            <div className="charts-grid">
+                                {/* Chart 1 */}
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '300px' }}>
+                                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                                        {type === 'campaigns' ? <Target size={18} /> : <PieChart size={18} />}
+                                        {chartTitles.title1}
+                                    </h3>
+                                    <div className="chart-container" style={{ width: '100%', height: 300, minHeight: 300, display: 'flex', justifyContent: 'center' }}>
+                                        {isMobile ? (
+                                            type === 'campaigns' ? (
+                                                <BarChart width={340} height={300} data={chart1Data} layout="vertical" margin={{ left: 10 }}>
+                                                    <CartesianGrid strokeDasharray="3 3" />
+                                                    <XAxis type="number" hide />
+                                                    <YAxis dataKey="name" type="category" width={80} style={{ fontSize: '12px' }} />
+                                                    <Tooltip formatter={(value: number) => `₹${value.toLocaleString()}`} />
+                                                    <Legend />
+                                                    <Bar dataKey="value" name="Raised" fill="#00C49F" radius={[0, 4, 4, 0]} barSize={20} />
+                                                    <Bar dataKey="goal" name="Goal" fill="#d1d5db" radius={[0, 4, 4, 0]} barSize={20} />
+                                                </BarChart>
+                                            ) : (
+                                                <RechartsPieChart width={340} height={300}>
+                                                    <Pie
+                                                        data={chart1Data}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        innerRadius={60}
+                                                        outerRadius={80}
+                                                        fill="#8884d8"
+                                                        paddingAngle={5}
+                                                        dataKey="value"
+                                                    >
+                                                        {chart1Data.map((entry, index) => (
+                                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                        ))}
+                                                    </Pie>
+                                                    <Tooltip formatter={(value: number) => type === 'donations' ? `₹${value.toLocaleString()}` : value} />
+                                                    <Legend />
+                                                </RechartsPieChart>
+                                            )
                                         ) : (
-                                            <RechartsPieChart>
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                {type === 'campaigns' ? (
+                                                    <BarChart data={chart1Data} layout="vertical" margin={{ left: 10 }}>
+                                                        <CartesianGrid strokeDasharray="3 3" />
+                                                        <XAxis type="number" hide />
+                                                        <YAxis dataKey="name" type="category" width={80} style={{ fontSize: '12px' }} />
+                                                        <Tooltip formatter={(value: number) => `₹${value.toLocaleString()}`} />
+                                                        <Legend />
+                                                        <Bar dataKey="value" name="Raised" fill="#00C49F" radius={[0, 4, 4, 0]} barSize={20} />
+                                                        <Bar dataKey="goal" name="Goal" fill="#d1d5db" radius={[0, 4, 4, 0]} barSize={20} />
+                                                    </BarChart>
+                                                ) : (
+                                                    <RechartsPieChart>
+                                                        <Pie
+                                                            data={chart1Data}
+                                                            cx="50%"
+                                                            cy="50%"
+                                                            innerRadius={60}
+                                                            outerRadius={80}
+                                                            fill="#8884d8"
+                                                            paddingAngle={5}
+                                                            dataKey="value"
+                                                        >
+                                                            {chart1Data.map((entry, index) => (
+                                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                            ))}
+                                                        </Pie>
+                                                        <Tooltip formatter={(value: number) => type === 'donations' ? `₹${value.toLocaleString()}` : value} />
+                                                        <Legend />
+                                                    </RechartsPieChart>
+                                                )}
+                                            </ResponsiveContainer>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Chart 2 */}
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '300px' }}>
+                                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                                        <TrendingUp size={18} />
+                                        {chartTitles.title2}
+                                    </h3>
+                                    <div className="chart-container" style={{ width: '100%', height: 300, minHeight: 300, display: 'flex', justifyContent: 'center' }}>
+                                        {isMobile ? (
+                                            <RechartsPieChart width={340} height={300}>
                                                 <Pie
-                                                    data={chart1Data}
+                                                    data={chart2Data}
                                                     cx="50%"
                                                     cy="50%"
                                                     innerRadius={60}
@@ -356,48 +436,39 @@ export default function StatDetailModal({ type, onClose }: StatDetailModalProps)
                                                     paddingAngle={5}
                                                     dataKey="value"
                                                 >
-                                                    {chart1Data.map((entry, index) => (
-                                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                    {chart2Data.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} /> // Offset colors
                                                     ))}
                                                 </Pie>
-                                                <Tooltip formatter={(value: number) => type === 'donations' ? `₹${value.toLocaleString()}` : value} />
+                                                <Tooltip formatter={(value: number) => (type === 'donations' || type === 'campaigns') ? `₹${value.toLocaleString()}` : value} />
                                                 <Legend />
                                             </RechartsPieChart>
+                                        ) : (
+                                            <ResponsiveContainer width="100%" height="100%">
+                                                <RechartsPieChart>
+                                                    <Pie
+                                                        data={chart2Data}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        innerRadius={60}
+                                                        outerRadius={80}
+                                                        fill="#8884d8"
+                                                        paddingAngle={5}
+                                                        dataKey="value"
+                                                    >
+                                                        {chart2Data.map((entry, index) => (
+                                                            <Cell key={`cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} /> // Offset colors
+                                                        ))}
+                                                    </Pie>
+                                                    <Tooltip formatter={(value: number) => (type === 'donations' || type === 'campaigns') ? `₹${value.toLocaleString()}` : value} />
+                                                    <Legend />
+                                                </RechartsPieChart>
+                                            </ResponsiveContainer>
                                         )}
-                                    </ResponsiveContainer>
+                                    </div>
                                 </div>
                             </div>
-
-                            {/* Chart 2 */}
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                                    <TrendingUp size={18} />
-                                    {chartTitles.title2}
-                                </h3>
-                                <div style={{ width: '100%', height: 250 }}>
-                                    <ResponsiveContainer>
-                                        <RechartsPieChart>
-                                            <Pie
-                                                data={chart2Data}
-                                                cx="50%"
-                                                cy="50%"
-                                                innerRadius={60}
-                                                outerRadius={80}
-                                                fill="#8884d8"
-                                                paddingAngle={5}
-                                                dataKey="value"
-                                            >
-                                                {chart2Data.map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} /> // Offset colors
-                                                ))}
-                                            </Pie>
-                                            <Tooltip formatter={(value: number) => (type === 'donations' || type === 'campaigns') ? `₹${value.toLocaleString()}` : value} />
-                                            <Legend />
-                                        </RechartsPieChart>
-                                    </ResponsiveContainer>
-                                </div>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 )}
             </div>

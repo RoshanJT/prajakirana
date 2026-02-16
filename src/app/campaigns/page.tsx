@@ -124,19 +124,19 @@ export default function CampaignsPage() {
 
     return (
         <div>
-            <header className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
-                <div>
+            <header className="campaign-header flex justify-between items-center" style={{ marginBottom: '2rem' }}>
+                <div className="header-content">
                     <h1 className="text-xl font-bold">Campaigns</h1>
                     <p className="text-muted">Manage fundraising campaigns and events</p>
                 </div>
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary header-action"
                     onClick={() => {
                         setEditingCampaign(null);
                         setShowForm(true);
                     }}
                 >
-                    <Plus size={18} /> Create Campaign
+                    <Plus size={18} /> <span>Create Campaign</span>
                 </button>
             </header>
 

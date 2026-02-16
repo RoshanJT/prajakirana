@@ -59,7 +59,7 @@ export default function CampaignForm({ onClose, onSubmit, initialData }: Campaig
     };
 
     return (
-        <div style={{
+        <div className="modal-overlay" style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -71,7 +71,7 @@ export default function CampaignForm({ onClose, onSubmit, initialData }: Campaig
             justifyContent: 'center',
             zIndex: 50
         }}>
-            <div className="card" style={{ width: '100%', maxWidth: '500px', position: 'relative' }}>
+            <div className="card modal-content" style={{ width: '100%', maxWidth: '500px', position: 'relative' }}>
                 <button
                     onClick={onClose}
                     style={{ position: 'absolute', right: '1.5rem', top: '1.5rem', background: 'none', border: 'none', cursor: 'pointer' }}

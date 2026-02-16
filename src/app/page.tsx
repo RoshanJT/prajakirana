@@ -14,16 +14,16 @@ export default function Dashboard() {
 
   return (
     <div>
-      <header className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
-        <div>
+      <header className="dashboard-header flex justify-between items-center" style={{ marginBottom: '2rem' }}>
+        <div className="header-content">
           <h1 className="text-2xl font-bold" style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Dashboard Overview</h1>
           <p className="text-muted">Welcome back, Administrator</p>
         </div>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary header-action"
           onClick={() => setShowDonationForm(true)}
         >
-          <Plus size={18} /> New Donation
+          <Plus size={18} /> <span>New Donation</span>
         </button>
       </header>
 
@@ -40,14 +40,16 @@ export default function Dashboard() {
 
       <DashboardStats />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
+      <div className="dashboard-main-grid">
         <div className="flex flex-col gap-8">
           <DonationChart />
-          <RecentActivity />
+          <div className="flex flex-col gap-6">
+            <EventCalendar />
+          </div>
         </div>
 
         <div className="flex flex-col gap-6">
-          <EventCalendar />
+          <RecentActivity />
         </div>
       </div>
     </div>

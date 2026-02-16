@@ -201,14 +201,14 @@ export default function CommunicationPage() {
     return (
         <div>
             {/* Page Header */}
-            <header className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
+            <header className="communication-header flex justify-between items-center" style={{ marginBottom: '2rem' }}>
                 <div>
                     <h1 className="text-xl font-bold">Communication Center</h1>
                     <p className="text-muted">Manage outreach campaigns and donor updates</p>
                 </div>
 
                 {/* Channel Switcher */}
-                <div className="flex gap-2">
+                <div className="channel-buttons flex gap-2">
                     <button
                         onClick={() => handleChannelChange('email')}
                         className={`btn ${activeChannel === 'email' ? 'btn-primary' : 'btn-outline'}`}

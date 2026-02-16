@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, Users, Megaphone, Settings, HeartHandshake, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Megaphone, Settings, HeartHandshake, LogOut, X } from "lucide-react";
 
 const navItems = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -14,7 +14,12 @@ const navItems = [
     { name: "Settings", href: "/settings", icon: Settings },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+    isMobileMenuOpen?: boolean;
+    onCloseMobileMenu?: () => void;
+}
+
+export default function Sidebar({ isMobileMenuOpen = false, onCloseMobileMenu }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
     const supabase = createClient();
@@ -25,15 +30,36 @@ export default function Sidebar() {
         router.refresh();
     };
 
+    const handleNavClick = () => {
+        // Close mobile menu when navigation item is clicked
+        if (onCloseMobileMenu) {
+            onCloseMobileMenu();
+        }
+    };
+
     if (pathname === '/login') return null;
 
-
     return (
-        <aside className="sidebar flex flex-col justify-between h-full">
+        <aside className={`sidebar flex flex-col justify-between h-full ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
             <div>
-                <div className="logo">
-                    <Image src="/logo-new.jpg" alt="Prajakirana Seva Logo" width={48} height={48} />
-                    <span>PRAJAKIRANA SEVA</span>
+                <div className="logo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <Image src="/logo-new.jpg" alt="Prajakirana Seva Logo" width={48} height={48} />
+                        <span>PRAJAKIRANA SEVA</span>
+                    </div>
+                    {/* Mobile Close Button */}
+                    <button
+                        className="mobile-close-btn"
+                        onClick={onCloseMobileMenu}
+                        style={{
+                            padding: '0.5rem',
+                            color: 'var(--primary)',
+                            display: 'none'
+                        }}
+                        aria-label="Close menu"
+                    >
+                        <X size={24} />
+                    </button>
                 </div>
                 <nav>
                     {navItems.map((item) => {
@@ -44,6 +70,7 @@ export default function Sidebar() {
                                 key={item.href}
                                 href={item.href}
                                 className={`nav-item ${isActive ? "active" : ""}`}
+                                onClick={handleNavClick}
                             >
                                 <Icon size={22} />
                                 <span>{item.name}</span>

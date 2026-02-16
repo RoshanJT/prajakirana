@@ -11,6 +11,17 @@ export default function DonationChart() {
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [availableYears, setAvailableYears] = useState<number[]>([new Date().getFullYear()]);
     const [loading, setLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,60 +109,117 @@ export default function DonationChart() {
                         Loading data...
                     </div>
                 ) : (
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart
-                            data={data}
-                            margin={{
-                                top: 10,
-                                right: 10,
-                                left: 0,
-                                bottom: 0,
-                            }}
-                        >
-                            <defs>
-                                <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#2A8575" stopOpacity={0.2} />
-                                    <stop offset="95%" stopColor="#2A8575" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                            <XAxis
-                                dataKey="name"
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fill: '#64748b', fontSize: 12 }}
-                                dy={10}
-                            />
-                            <YAxis
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{ fill: '#64748b', fontSize: 12 }}
-                                tickFormatter={(value) => `₹${value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value}`}
-                            />
-                            <Tooltip
-                                contentStyle={{
-                                    background: '#fff',
-                                    border: '1px solid #e2e8f0',
-                                    borderRadius: '8px',
-                                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                                    padding: '8px 12px'
+                    isMobile ? (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}>
+                            <AreaChart
+                                width={340}
+                                height={300}
+                                data={data}
+                                margin={{
+                                    top: 10,
+                                    right: 10,
+                                    left: 0,
+                                    bottom: 0,
                                 }}
-                                itemStyle={{ color: '#2A8575', fontWeight: 600 }}
-                                formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total Donated']}
-                            />
-                            <Area
-                                type="monotone"
-                                dataKey="amount"
-                                stroke="#2A8575"
-                                strokeWidth={3}
-                                fillOpacity={1}
-                                fill="url(#colorAmount)"
-                                activeDot={{ r: 6, strokeWidth: 0, fill: '#2A8575' }}
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                            >
+                                <defs>
+                                    <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#2A8575" stopOpacity={0.2} />
+                                        <stop offset="95%" stopColor="#2A8575" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                <XAxis
+                                    dataKey="name"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#64748b', fontSize: 12 }}
+                                    dy={10}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#64748b', fontSize: 12 }}
+                                    tickFormatter={(value) => `₹${value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value}`}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        background: '#fff',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                                        padding: '8px 12px'
+                                    }}
+                                    itemStyle={{ color: '#2A8575', fontWeight: 600 }}
+                                    formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total Donated']}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="amount"
+                                    stroke="#2A8575"
+                                    strokeWidth={3}
+                                    fillOpacity={1}
+                                    fill="url(#colorAmount)"
+                                    activeDot={{ r: 6, strokeWidth: 0, fill: '#2A8575' }}
+                                />
+                            </AreaChart>
+                        </div>
+                    ) : (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart
+                                data={data}
+                                margin={{
+                                    top: 10,
+                                    right: 10,
+                                    left: 0,
+                                    bottom: 0,
+                                }}
+                            >
+                                <defs>
+                                    <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#2A8575" stopOpacity={0.2} />
+                                        <stop offset="95%" stopColor="#2A8575" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                                <XAxis
+                                    dataKey="name"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#64748b', fontSize: 12 }}
+                                    dy={10}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#64748b', fontSize: 12 }}
+                                    tickFormatter={(value) => `₹${value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value}`}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        background: '#fff',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                                        padding: '8px 12px'
+                                    }}
+                                    itemStyle={{ color: '#2A8575', fontWeight: 600 }}
+                                    formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Total Donated']}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="amount"
+                                    stroke="#2A8575"
+                                    strokeWidth={3}
+                                    fillOpacity={1}
+                                    fill="url(#colorAmount)"
+                                    activeDot={{ r: 6, strokeWidth: 0, fill: '#2A8575' }}
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    )
                 )}
             </div>
-        </div>
+        </div >
     );
 }

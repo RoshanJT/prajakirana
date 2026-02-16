@@ -244,12 +244,12 @@ export default function DonorsPage() {
 
     return (
         <div>
-            <header className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
+            <header className="donors-header flex justify-between items-center" style={{ marginBottom: '2rem' }}>
                 <div>
                     <h1 className="text-xl font-bold">Donor Management</h1>
                     <p className="text-muted">Manage your donor database</p>
                 </div>
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <div className="header-actions flex gap-2">
                     <button className="btn btn-outline" onClick={exportToCSV}>
                         <Download size={18} /> Export as CSV
                     </button>
@@ -274,8 +274,8 @@ export default function DonorsPage() {
             )}
 
             <div className="card">
-                <div className="flex justify-between items-center" style={{ marginBottom: '1.5rem' }}>
-                    <div className="flex gap-2" style={{ flex: 1, maxWidth: '400px' }}>
+                <div className="donors-filters flex justify-between items-center" style={{ marginBottom: '1.5rem' }}>
+                    <div className="search-bar flex gap-2" style={{ flex: 1, maxWidth: '400px' }}>
                         <div style={{ position: 'relative', width: '100%' }}>
                             <Search size={18} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                             <input
@@ -292,7 +292,7 @@ export default function DonorsPage() {
                                 }}
                             />
                         </div>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <div className="filter-bar flex gap-2">
                             <select
                                 className="input-field"
                                 value={filterType}
@@ -320,7 +320,7 @@ export default function DonorsPage() {
                     </div>
                 </div>
 
-                <div>
+                <div className="table-container" style={{ overflowX: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <thead>
                             <tr style={{ borderBottom: '1px solid var(--border-color)', textAlign: 'left' }}>

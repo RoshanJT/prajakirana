@@ -56,20 +56,14 @@ export default function LoginPage() {
     };
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'var(--bg-body)'
-        }}>
-            <div className="card" style={{ width: '100%', maxWidth: '400px', padding: '2rem' }}>
+        <div className="login-container">
+            <div className="card login-card">
                 <div className="flex flex-col items-center gap-2" style={{ marginBottom: '2rem', textAlign: 'center' }}>
-                    <div style={{ padding: '0.5rem', borderRadius: '50%', overflow: 'hidden' }}>
-                        <Image src="/logo-new.jpg" alt="Prajakirana Seva Logo" width={120} height={120} style={{ borderRadius: '50%', border: '4px solid var(--primary)' }} />
+                    <div className="login-logo-container">
+                        <Image src="/logo-new.jpg" alt="Prajakirana Seva Logo" width={100} height={100} style={{ borderRadius: '50%', border: '4px solid var(--primary)' }} />
                     </div>
-                    <h1 className="text-xl font-bold" style={{ color: 'var(--primary)', textAlign: 'center', lineHeight: '1.4' }}>PRAJAKIRANA SEVA<br />CHARITABLE TRUST</h1>
-                    <p className="text-muted" style={{ textAlign: 'center' }}>{isSignUp ? 'Create your admin account' : 'Sign in to access dashboard'}</p>
+                    <h1 className="font-bold login-title">PRAJAKIRANA SEVA<br />CHARITABLE TRUST</h1>
+                    <p className="text-muted" style={{ textAlign: 'center', fontSize: '0.9rem' }}>{isSignUp ? 'Create your admin account' : 'Sign in to access dashboard'}</p>
                 </div>
 
                 {error && (
@@ -129,6 +123,7 @@ export default function LoginPage() {
                     </button>
                 </form>
 
+                {/* 
                 <p className="text-center text-sm text-muted" style={{ marginTop: '1.5rem' }}>
                     {isSignUp ? 'Already have an account?' : "Don't have an account?"}
                     <button
@@ -147,7 +142,8 @@ export default function LoginPage() {
                         }}>
                         {isSignUp ? 'Sign In' : 'Sign Up'}
                     </button>
-                </p>
+                </p> 
+                */}
             </div>
         </div>
     );

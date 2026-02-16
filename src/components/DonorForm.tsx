@@ -110,7 +110,7 @@ export default function DonorForm({ onClose, onSubmit, initialData }: DonorFormP
     };
 
     return (
-        <div style={{
+        <div className="modal-overlay" style={{
             position: 'fixed',
             top: 0,
             left: 0,
@@ -122,7 +122,7 @@ export default function DonorForm({ onClose, onSubmit, initialData }: DonorFormP
             justifyContent: 'center',
             zIndex: 50
         }}>
-            <div className="card" style={{ width: '100%', maxWidth: '600px', position: 'relative', maxHeight: '90vh', overflowY: 'auto' }}>
+            <div className="card modal-content" style={{ width: '100%', maxWidth: '600px', position: 'relative', maxHeight: '90vh', overflowY: 'auto' }}>
                 <button
                     onClick={onClose}
                     style={{ position: 'absolute', right: '1.5rem', top: '1.5rem', background: 'none', border: 'none', cursor: 'pointer' }}
